@@ -1,7 +1,7 @@
 name: CommunityEvents
 version: 1.0.1
 main: com.Eldersson.communityevents.Communityevents
-api-version: 1.13
+api-version: 1.19
 author: Eldersson
 description: A comprehensive community event management plugin with GUI and teleportation features
 commands:
