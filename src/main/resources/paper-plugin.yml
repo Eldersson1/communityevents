@@ -1,0 +1,21 @@
+name: CommunityEvents
+version: 1.0.0
+main: com.Eldersson.communityevents.Communityevents
+api-version: 1.19
+author: Eldersson
+description: A comprehensive community event management plugin with GUI and teleportation features
+permissions:
+  communityevents.use:
+    description: Allows players to view and join events
+    default: true
+
+  communityevents.create:
+    description: Allows players to create events
+    default: op
+
+  communityevents.admin:
+    description: Full access to all event management features
+    default: op
+    children:
+      - communityevents.use
+      - communityevents.create

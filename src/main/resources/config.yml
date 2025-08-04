@@ -1,0 +1,52 @@
+# CommunityEvents Configuration File
+# Configure various plugin settings
+
+# Event Settings
+events:
+  # Remove hunger when players teleport to events
+  remove-hunger-on-teleport: true
+
+  # Clear player inventory when teleporting to events
+  clear-inventory-on-teleport: false
+
+  # Restore inventory when teleporting back (only works if clear-inventory-on-teleport is true)
+  restore-inventory-on-return: true
+
+  # Set player gamemode when teleporting to events (set to 'none' to disable)
+  # Options: survival, creative, adventure, spectator, none
+  set-gamemode-on-teleport: 'none'
+
+  # Restore original gamemode when teleporting back
+  restore-gamemode-on-return: true
+
+  # Give players specific items when teleporting to events
+  # Set to false to disable, or provide a list of items
+  give-items-on-teleport: false
+  # Example items (uncomment and modify as needed):
+  # give-items-list:
+  #   - 'DIAMOND_SWORD:1'
+  #   - 'GOLDEN_APPLE:5'
+  #   - 'BOW:1'
+  #   - 'ARROW:64'
+
+# GUI Settings
+gui:
+  # Title of the events GUI
+  title: "Upcoming Events"
+
+  # Color of the GUI title (use Minecraft color codes: &1, &2, etc.)
+  title-color: "&1"
+
+  # Size of the GUI (must be multiple of 9, max 54)
+  size: 27
+
+# Messages (supports color codes with &)
+messages:
+  teleport-success: "&aTeleported to {event}!"
+  teleport-back-info: "&eYou will be teleported back when the event ends."
+  teleport-early: "&eTeleported to {event} (event hasn't started yet)"
+  event-starts-in: "&7Event starts in: {time}"
+  event-ended: "&cThis event has already ended!"
+  teleport-back: "&aEvent ended! You have been teleported back."
+  no-permission: "&cYou don't have permission to use this command!"
+  only-players: "&cOnly players can use this command!"

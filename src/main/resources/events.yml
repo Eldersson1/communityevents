@@ -1,0 +1,19 @@
+# CommunityEvents Configuration File
+# This file stores all event data
+
+# Events will be automatically saved here when created
+# Format:
+# events:
+#   event0:
+#     name: "Event Name"
+#     date: "DD/MM/YYYY"
+#     time: "HH:MM"
+#     duration: 60
+#     world: "world"
+#     x: 0.0
+#     y: 64.0
+#     z: 0.0
+#     yaw: 0.0
+#     pitch: 0.0
+
+events: {}

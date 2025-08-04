@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="communityevents:jar">
+    <output-path>D:/Minecraft servers/Server/plugins</output-path>
+    <root id="archive" name="communityevents.jar">
+      <element id="module-output" name="communityevents" />
+    </root>
+  </artifact>
+</component>
