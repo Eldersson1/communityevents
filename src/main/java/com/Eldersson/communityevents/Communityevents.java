@@ -51,6 +51,27 @@ public final class Communityevents extends JavaPlugin implements Listener {
 
         // Start the event status checker
         startEventChecker();
+        getLogger().info("Running on: " + VersionCompatibility.getServerVersion());
+        getLogger().info("Minecraft version: " + VersionCompatibility.getMinecraftVersion());
+        getLogger().info("Legacy version: " + VersionCompatibility.isLegacyVersion());
+
+        // Save default config
+        saveDefaultConfig();
+
+        // Create and load events file
+        createEventsFile();
+        loadEvents();
+
+        // Register event listener
+        getServer().getPluginManager().registerEvents(this, this);
+
+        // Start the event status checker
+        startEventChecker();
+
+        // Try modern command registration first (Paper), then fall back to traditional
+        if (!registerCommandsModern()) {
+            registerCommandsTraditional();
+        }
 
         try {
             // Access the CommandMap reflectively (for Paper)
@@ -117,6 +138,56 @@ public final class Communityevents extends JavaPlugin implements Listener {
                     events.add(event);
                 }
             }
+        }
+    }
+    private boolean registerCommandsModern() {
+        try {
+            // Access the CommandMap reflectively (for Paper)
+            java.lang.reflect.Method getCommandMapMethod = getServer().getClass().getMethod("getCommandMap");
+            Object commandMap = getCommandMapMethod.invoke(getServer());
+
+            java.lang.reflect.Method registerMethod = commandMap.getClass().getMethod(
+                    "register", String.class, org.bukkit.command.Command.class
+            );
+
+            // Register /events
+            registerMethod.invoke(commandMap, "communityevents",
+                    new PluginCommandWrapper("events", new EventsCommand(this)));
+
+            // Register /event
+            registerMethod.invoke(commandMap, "communityevents",
+                    new PluginCommandWrapper("event", new EventCommand(this)));
+
+            getLogger().info("Successfully registered commands using modern method");
+            return true;
+        } catch (Exception e) {
+            getLogger().info("Modern command registration failed, trying traditional method...");
+            return false;
+        }
+    }
+    private void registerCommandsTraditional() {
+        try {
+            // Traditional command registration (requires commands in plugin.yml)
+            org.bukkit.command.PluginCommand eventsCmd = getCommand("events");
+            org.bukkit.command.PluginCommand eventCmd = getCommand("event");
+
+            if (eventsCmd != null) {
+                eventsCmd.setExecutor(new EventsCommand(this));
+                getLogger().info("Registered /events command traditionally");
+            }
+
+            if (eventCmd != null) {
+                eventCmd.setExecutor(new EventCommand(this));
+                eventCmd.setTabCompleter(new EventCommand(this));
+                getLogger().info("Registered /event command traditionally");
+            }
+
+            if (eventsCmd == null || eventCmd == null) {
+                getLogger().warning("Some commands were not registered. Make sure they're defined in plugin.yml");
+            }
+        } catch (Exception e) {
+            getLogger().severe("Traditional command registration also failed: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
